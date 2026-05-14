@@ -7,6 +7,7 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { PortfolioSection } from "@/components/sections/portfolio-section";
 import { ProcessSection } from "@/components/sections/process-section";
 import { ServicesSection } from "@/components/sections/services-section";
+import { WorkersSection } from "@/components/sections/workers-section";
 import { WhyUsSection } from "@/components/sections/why-us-section";
 
 export default function Home() {
@@ -16,11 +17,12 @@ export default function Home() {
         <Navbar />
         <HeroSection />
         <AboutSection />
+        <PortfolioSection />
         <ServicesSection />
         <WhyUsSection />
-        <PortfolioSection />
         <ProcessSection />
         <ContactSection />
+        <WorkersSection />
         <Footer />
       </main>
     </PageMotionShell>

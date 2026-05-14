@@ -8,6 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -115,7 +116,7 @@ function ProjectStackCard({
               {project.status}
             </span>
             <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-              {project.tags.join(" / ")}
+              {project.genre}
             </span>
           </div>
           <h3 className="mt-5 text-3xl font-semibold tracking-[-0.05em] text-[#f7f3ea]">
@@ -123,6 +124,28 @@ function ProjectStackCard({
           </h3>
           <p className="mt-3 text-base leading-7 text-[var(--muted)]">{project.role}</p>
           <p className="mt-5 max-w-xl text-sm leading-7 text-[var(--muted)]">{project.description}</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
+              Category
+              <div className="mt-2 text-sm font-medium normal-case tracking-normal text-[#f7f3ea]">
+                {project.category}
+              </div>
+            </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
+              Platform
+              <div className="mt-2 text-sm font-medium normal-case tracking-normal text-[#f7f3ea]">
+                {project.platform}
+              </div>
+            </div>
+          </div>
+          <div className="mt-6">
+            <Link
+              href="#contact"
+              className="inline-flex items-center rounded-full border border-[rgba(206,224,244,0.22)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)] transition-transform duration-500 hover:-translate-y-0.5"
+            >
+              Learn More
+            </Link>
+          </div>
         </div>
         <ProjectThumbnail index={index} active={false} />
       </div>
@@ -177,27 +200,31 @@ function FeaturedProjectCard({
               <p className="mt-4 text-base leading-7 text-[var(--muted)]">{project.role}</p>
               <p className="mt-5 text-sm leading-7 text-[var(--muted)]">{project.description}</p>
               <div className="mt-auto pt-6">
-                <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-                  Support profile
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Genre</div>
+                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.genre}</div>
+                  </div>
+                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Platform</div>
+                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.platform}</div>
+                  </div>
+                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Category</div>
+                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.category}</div>
+                  </div>
+                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Studio role</div>
+                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.role}</div>
+                  </div>
                 </div>
-                <div className="mt-4 space-y-3">
-                  {[72, 56, 84].map((width, lineIndex) => (
-                    <div key={width} className="h-2 overflow-hidden rounded-full bg-[rgba(255,255,255,0.06)]">
-                  <motion.div
-                        className="h-full rounded-full bg-[linear-gradient(90deg,var(--accent-blue),var(--accent-pink),var(--accent))]"
-                        animate={
-                          active
-                            ? { width: [`${Math.max(18, width - 12)}%`, `${width}%`, `${Math.max(20, width - 8)}%`] }
-                            : { width: `${Math.max(18, width - 18)}%` }
-                        }
-                        transition={{
-                          duration: 2.8 + lineIndex * 0.35,
-                          repeat: active ? Number.POSITIVE_INFINITY : 0,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    </div>
-                  ))}
+                <div className="mt-6">
+                  <Link
+                    href="#contact"
+                    className="inline-flex items-center rounded-full border border-[rgba(206,224,244,0.22)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)] transition-transform duration-500 hover:-translate-y-0.5"
+                  >
+                    View Project
+                  </Link>
                 </div>
               </div>
             </div>
@@ -216,10 +243,10 @@ function FeaturedProjectCard({
             </div>
             <div className="rounded-[1.2rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-right">
               <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-                Featured project
+                {project.platform}
               </div>
               <div className="mt-2 text-sm font-semibold tracking-[-0.03em] text-[#f7f3ea]">
-                Scene 0{index + 1}
+                {project.status}
               </div>
             </div>
           </div>
@@ -313,9 +340,9 @@ export function PortfolioSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_16%,rgba(169,210,255,0.08),transparent_18%),radial-gradient(circle_at_76%_68%,rgba(255,209,220,0.08),transparent_18%)]" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          label="Portfolio"
-          title="Projects staged as a controlled system, not a flat list."
-          description="A showcase layer for the games, launches, and operational support tracks the studio contributes to. The structure is ready to populate with live project work over time."
+          label="Our Portfolio"
+          title="A showcase of projects, concepts, and development work created or supported by High Ambitions Studios."
+          description="A curated look at the games, systems, and support frameworks connected to the studio, presented with the same level of care as the rest of the brand experience."
         />
 
         <div ref={sceneRef} className={`relative mt-16 ${enhanced ? "h-[620vh]" : ""}`}>
@@ -331,12 +358,12 @@ export function PortfolioSection() {
                   <div className="text-xs uppercase tracking-[0.34em] text-[var(--accent)]">Showcase stage</div>
                   <MotionDivider className="mt-6 h-px w-28 origin-left bg-[linear-gradient(90deg,var(--accent-blue),var(--accent),transparent)]" />
                   <div className="mt-6 text-[clamp(3rem,7vw,5.5rem)] font-semibold uppercase leading-[0.9] tracking-[-0.08em] text-[#f7f3ea]">
-                    Project
+                    Our
                     <br />
-                    dossiers.
+                    portfolio.
                   </div>
                   <p className="mt-8 max-w-sm text-base leading-7 text-[var(--muted)]">
-                    Each project is presented like a live working file, with the thumbnail, support profile, and role gathered into one spotlighted scene.
+                    Each project is framed like a live studio dossier, with the concept, delivery role, genre, and platform gathered into one controlled presentation.
                   </p>
                   <div className="mt-10 grid gap-3">
                     {portfolioProjects.map((project, index) => (

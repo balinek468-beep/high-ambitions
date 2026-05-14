@@ -1,8 +1,9 @@
 export const navItems = [
   { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
   { label: "Portfolio", href: "#portfolio" },
+  { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
+  { label: "Team", href: "#workers" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -86,35 +87,41 @@ export const processSteps = [
 
 export const portfolioProjects = [
   {
-    title: "Live Operations Support",
-    role: "Embedded production and communication support for evolving live games.",
-    tags: ["Live Ops", "Production", "Community"],
-    status: "Active support",
+    title: "N/A",
+    role: "No public projects listed yet",
+    genre: "N/A",
+    platform: "N/A",
+    category: "Portfolio Pending",
+    tags: ["Portfolio Pending"],
+    status: "No games yet",
     description:
-      "Operational frameworks, communication rhythms, and player-facing support for teams managing constant updates and community pressure.",
+      "There are no public games or featured projects listed yet. This section will be updated as High Ambitions Studios publishes work.",
+  },
+];
+
+export const workers = [
+  {
+    name: "Balin",
+    role: "",
+    description: "",
+    skills: [],
   },
   {
-    title: "Launch Readiness Systems",
-    role: "Cross-functional planning for high-stakes release windows.",
-    tags: ["Launch", "Marketing", "PR"],
-    status: "Rollout planning",
-    description:
-      "Coordinated release planning across delivery, audience visibility, and public communication so launch moments remain controlled and credible.",
+    name: "Worker 02",
+    role: "",
+    description: "",
+    skills: [],
   },
   {
-    title: "Analytics-Led Optimization",
-    role: "Player insight frameworks connected back into production decisions.",
-    tags: ["Analytics", "Optimization", "Retention"],
-    status: "Performance review",
-    description:
-      "Signal tracking and decision support focused on retention, playtime, and monetization patterns that directly inform ongoing roadmap choices.",
+    name: "Worker 03",
+    role: "",
+    description: "",
+    skills: [],
   },
   {
-    title: "Studio Growth Architecture",
-    role: "Scalable support systems for teams moving into larger operational complexity.",
-    tags: ["Strategy", "Operations", "Growth"],
-    status: "Advisory",
-    description:
-      "Structured support for teams increasing scope, adding stakeholders, or preparing for more demanding production and communication requirements.",
+    name: "Worker 04",
+    role: "",
+    description: "",
+    skills: [],
   },
 ];
