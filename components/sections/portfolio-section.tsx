@@ -1,94 +1,156 @@
 "use client";
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 import { SectionHeading } from "@/components/ui/section-heading";
-import {
-  MotionDivider,
-} from "@/components/ui/line-system";
+import { MotionDivider } from "@/components/ui/line-system";
 import { portfolioProjects } from "@/lib/content";
 
-function ProjectThumbnail({
-  index,
-  active,
+function PortfolioCta({
+  href,
+  label,
+  variant,
 }: {
-  index: number;
-  active: boolean;
+  href: string;
+  label: string;
+  variant: "primary" | "secondary";
 }) {
-  const mode = index % 3;
+  const base =
+    "group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-xs font-semibold uppercase tracking-[0.26em] transition-all duration-300 hover:-translate-y-1";
+  const styles =
+    variant === "primary"
+      ? "border border-[rgba(169,210,255,0.34)] bg-[linear-gradient(135deg,rgba(130,220,255,0.95),rgba(105,154,255,0.86))] text-[#061018] shadow-[0_14px_36px_rgba(80,160,255,0.24)] hover:brightness-105 hover:shadow-[0_18px_42px_rgba(80,160,255,0.3)]"
+      : "border border-[rgba(200,235,255,0.22)] bg-[rgba(255,255,255,0.04)] text-[#f5f8ff] shadow-[0_12px_28px_rgba(0,0,0,0.22)] hover:border-[rgba(169,210,255,0.38)] hover:bg-[rgba(255,255,255,0.07)]";
 
   return (
-    <div className="relative aspect-[1.08] overflow-hidden rounded-[1.75rem] border border-[rgba(255,255,255,0.1)] bg-[linear-gradient(145deg,rgba(169,210,255,0.14),rgba(255,209,220,0.08)_42%,rgba(6,8,14,0.92))]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_22%,rgba(169,210,255,0.3),transparent_28%),radial-gradient(circle_at_68%_30%,rgba(255,209,220,0.22),transparent_24%),linear-gradient(160deg,rgba(8,10,16,0.32),rgba(8,10,16,0.94))]" />
-      <motion.div
-        className="absolute inset-[8%] rounded-[1.4rem] border border-[rgba(255,255,255,0.11)]"
-        animate={
-          mode === 0 && active
-            ? { rotate: [0, 1.8, 0] }
-            : mode === 1 && active
-              ? { scale: [0.97, 1.02, 0.97], opacity: [0.7, 1, 0.7] }
-              : mode === 2 && active
-                ? { x: [0, 8, 0], y: [0, -8, 0] }
-                : undefined
-        }
-        transition={{ duration: 7, repeat: active ? Number.POSITIVE_INFINITY : 0, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute left-[12%] top-[14%] h-[18%] w-[48%] rounded-[1.15rem] border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.05)] backdrop-blur-sm"
-        animate={
-          mode === 0 && active
-            ? { x: [0, 8, 0] }
-            : mode === 1 && active
-              ? { y: [0, -12, 0], rotate: [0, -1.2, 0] }
-              : mode === 2 && active
-                ? { scaleX: [0.94, 1.06, 0.94], opacity: [0.64, 1, 0.68] }
-                : undefined
-        }
-        transition={{ duration: 5.5, repeat: active ? Number.POSITIVE_INFINITY : 0, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute right-[10%] top-[28%] h-[34%] w-[26%] rounded-[1.4rem] border border-[rgba(174,239,234,0.18)] bg-[rgba(174,239,234,0.08)]"
-        animate={
-          mode === 0 && active
-            ? { y: [0, 10, 0] }
-            : mode === 1 && active
-              ? { x: [0, -12, 0], opacity: [0.42, 0.82, 0.42] }
-              : mode === 2 && active
-                ? { rotate: [0, 2, 0], y: [0, 6, 0] }
-                : undefined
-        }
-        transition={{ duration: 6, repeat: active ? Number.POSITIVE_INFINITY : 0, ease: "easeInOut" }}
-      />
-      <div className="absolute bottom-[12%] left-[10%] right-[12%] rounded-[1.25rem] border border-[rgba(255,255,255,0.14)] bg-[rgba(8,10,16,0.74)] p-4 backdrop-blur-xl">
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">
-            Scene {index + 1}
-          </span>
-          <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_14px_rgba(174,239,234,0.42)]" />
-        </div>
-        <div className="mt-4 space-y-2">
-          {[66, 82, 52].map((width) => (
-            <div key={width} className="h-2 overflow-hidden rounded-full bg-[rgba(255,255,255,0.06)]">
-              <motion.div
-                className="h-full rounded-full bg-[linear-gradient(90deg,var(--accent-blue),var(--accent-pink),var(--accent))]"
-                animate={{ width: active ? `${width}%` : `${width - 8}%` }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              />
-            </div>
-          ))}
-        </div>
+    <Link
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={`${base} ${styles}`}
+    >
+      <span>{label}</span>
+      <span className="text-sm transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+    </Link>
+  );
+}
+
+function ProjectPreview({
+  project,
+}: {
+  project: (typeof portfolioProjects)[number];
+}) {
+  const images = project.images ?? [];
+
+  return (
+    <div className="relative">
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(174,239,234,0.22)] bg-[rgba(174,239,234,0.08)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]">
+          <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+          Live
+        </span>
+        <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+          Project dossier
+        </span>
       </div>
-      <div className="scan-line" />
+
+      <div className="relative h-[clamp(280px,34vw,430px)] overflow-visible rounded-[1.75rem] border border-[rgba(160,210,230,0.18)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
+        {images[0] ? (
+          <motion.div
+            animate={{ scale: [1, 1.02, 1] }}
+            transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            className="absolute inset-0 overflow-hidden rounded-[inherit]"
+          >
+            <Image
+              src={images[0]}
+              alt={`${project.title} primary artwork`}
+              fill
+              className="object-cover saturate-110 contrast-105"
+              sizes="(max-width: 1024px) 100vw, 52vw"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,10,18,0.06),rgba(7,10,18,0.46)_54%,rgba(7,10,18,0.76))]" />
+          </motion.div>
+        ) : (
+          <div className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(circle_at_24%_22%,rgba(169,210,255,0.3),transparent_28%),radial-gradient(circle_at_68%_30%,rgba(255,209,220,0.22),transparent_24%),linear-gradient(160deg,rgba(8,10,16,0.32),rgba(8,10,16,0.94))]" />
+        )}
+
+        <div className="pointer-events-none absolute inset-[4.5%] rounded-[1.45rem] border border-[rgba(255,255,255,0.11)]" />
+
+        {images[1] ? (
+          <motion.div
+            className="absolute bottom-[11%] left-[7%] z-[2] w-[clamp(155px,25vw,270px)] overflow-hidden rounded-[1.1rem] border border-[rgba(200,235,255,0.28)] bg-[rgba(255,255,255,0.04)] shadow-[0_18px_48px_rgba(0,0,0,0.55),0_0_28px_rgba(120,210,255,0.12)]"
+            animate={{ y: [0, -8, 0], rotate: [-1.5, -0.7, -1.5] }}
+            transition={{ duration: 6.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          >
+            <div className="relative aspect-[16/9]">
+              <Image
+                src={images[1]}
+                alt={`${project.title} supporting artwork left`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 46vw, 24vw"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(8,10,16,0.18)_18%,rgba(8,10,16,0.42))]" />
+            </div>
+          </motion.div>
+        ) : null}
+
+        {images[2] ? (
+          <motion.div
+            className="absolute bottom-[7%] right-[7%] z-[2] w-[clamp(150px,23vw,250px)] overflow-hidden rounded-[1.1rem] border border-[rgba(200,235,255,0.28)] bg-[rgba(255,255,255,0.04)] shadow-[0_18px_48px_rgba(0,0,0,0.55),0_0_28px_rgba(120,210,255,0.12)]"
+            animate={{ y: [0, 7, 0], rotate: [1.5, 0.7, 1.5] }}
+            transition={{ duration: 6.8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          >
+            <div className="relative aspect-[16/9]">
+              <Image
+                src={images[2]}
+                alt={`${project.title} supporting artwork right`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 44vw, 22vw"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(8,10,16,0.18)_18%,rgba(8,10,16,0.42))]" />
+            </div>
+          </motion.div>
+        ) : null}
+      </div>
     </div>
+  );
+}
+
+function ProjectSelectorItem({
+  project,
+  active,
+}: {
+  project: (typeof portfolioProjects)[number];
+  active: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      className={`group flex w-full items-center justify-between gap-4 rounded-[1.25rem] border px-4 py-4 text-left transition-all duration-300 ${
+        active
+          ? "border-[rgba(169,210,255,0.26)] bg-[rgba(255,255,255,0.06)] shadow-[0_14px_34px_rgba(0,0,0,0.2)]"
+          : "border-[var(--line)] bg-[rgba(255,255,255,0.02)] hover:border-[rgba(169,210,255,0.18)] hover:bg-[rgba(255,255,255,0.04)]"
+      }`}
+      aria-pressed={active}
+    >
+      <div>
+        <div className="text-sm font-semibold tracking-[-0.03em] text-[#f7f3ea]">{project.title}</div>
+        <div className="mt-2 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">{project.platform}</div>
+      </div>
+      <div className="flex items-center gap-3">
+        {active ? (
+          <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(174,239,234,0.24)] bg-[rgba(174,239,234,0.08)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.26em] text-[var(--accent)]">
+            <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+            Live
+          </span>
+        ) : null}
+        <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">{project.status}</span>
+      </div>
+    </button>
   );
 }
 
@@ -104,50 +166,41 @@ function ProjectStackCard({
       initial={{ opacity: 0, y: 40, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -5 }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--panel)] p-6 shadow-[var(--shadow)]"
     >
       <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(169,210,255,0.08),transparent_36%,rgba(255,209,220,0.06)_74%,rgba(174,239,234,0.08))] opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="relative grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-[10px] uppercase tracking-[0.32em] text-[var(--accent)]">
-              {project.status}
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-              {project.genre}
-            </span>
-          </div>
-          <h3 className="mt-5 text-3xl font-semibold tracking-[-0.05em] text-[#f7f3ea]">
-            {project.title}
-          </h3>
-          <p className="mt-3 text-base leading-7 text-[var(--muted)]">{project.role}</p>
-          <p className="mt-5 max-w-xl text-sm leading-7 text-[var(--muted)]">{project.description}</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
-              Category
-              <div className="mt-2 text-sm font-medium normal-case tracking-normal text-[#f7f3ea]">
-                {project.category}
-              </div>
+      <div className="relative">
+        <ProjectPreview project={project} />
+
+        <div className="mt-6 rounded-[1.5rem] border border-[rgba(160,210,230,0.16)] bg-[rgba(10,14,22,0.62)] p-5">
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Scene 01</div>
+          <h3 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-[#f7f3ea]">{project.title}</h3>
+          <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{project.description}</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Role</div>
+              <div className="mt-2 text-sm font-medium text-[#f7f3ea]">{project.role}</div>
             </div>
-            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-xs uppercase tracking-[0.24em] text-[var(--muted)]">
-              Platform
-              <div className="mt-2 text-sm font-medium normal-case tracking-normal text-[#f7f3ea]">
-                {project.platform}
-              </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Platform</div>
+              <div className="mt-2 text-sm font-medium text-[#f7f3ea]">{project.platform}</div>
+            </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Status</div>
+              <div className="mt-2 text-sm font-medium text-[#f7f3ea]">{project.status}</div>
+            </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Genre</div>
+              <div className="mt-2 text-sm font-medium text-[#f7f3ea]">{project.genre}</div>
             </div>
           </div>
-          <div className="mt-6">
-            <Link
-              href="#contact"
-              className="inline-flex items-center rounded-full border border-[rgba(206,224,244,0.22)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)] transition-transform duration-500 hover:-translate-y-0.5"
-            >
-              Learn More
-            </Link>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            {project.gameUrl ? <PortfolioCta href={project.gameUrl} label="Visit Game" variant="primary" /> : null}
+            {project.groupUrl ? <PortfolioCta href={project.groupUrl} label="Visit Group" variant="secondary" /> : null}
           </div>
         </div>
-        <ProjectThumbnail index={index} active={false} />
       </div>
     </motion.article>
   );
@@ -155,99 +208,55 @@ function ProjectStackCard({
 
 function FeaturedProjectCard({
   project,
-  index,
-  active,
 }: {
   project: (typeof portfolioProjects)[number];
-  index: number;
-  active: boolean;
 }) {
   return (
     <motion.article
-      initial={{ opacity: 0, scale: 0.92, rotateX: 8, y: 24, filter: "blur(10px)" }}
-      animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0, filter: "blur(0px)" }}
-      exit={{ opacity: 0, scale: 1.03, rotateX: -6, y: -16, filter: "blur(8px)" }}
-      transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute inset-0 overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[linear-gradient(145deg,rgba(22,26,34,0.96),rgba(12,14,20,0.92))] p-6 shadow-[var(--shadow-glow)]"
+      initial={{ opacity: 0, y: 28, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+      className="relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[linear-gradient(145deg,rgba(22,26,34,0.96),rgba(12,14,20,0.92))] p-6 shadow-[var(--shadow-glow)]"
     >
       <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(169,210,255,0.11),transparent_34%,rgba(255,209,220,0.09)_68%,rgba(174,239,234,0.12))]" />
       <div className="absolute left-7 right-7 top-7 h-px bg-[linear-gradient(90deg,rgba(169,210,255,0.28),transparent)]" />
-      <motion.div
-        animate={active ? { opacity: [0.4, 1, 0.52], scale: [0.92, 1.02, 0.94] } : { opacity: 0.4, scale: 0.92 }}
-        transition={{ duration: 3.8, repeat: active ? Number.POSITIVE_INFINITY : 0, ease: "easeInOut" }}
-        className="absolute right-7 top-7 h-20 w-20 rounded-full border border-[rgba(174,239,234,0.18)] bg-[radial-gradient(circle,rgba(174,239,234,0.22),transparent_72%)] blur-sm"
-      />
-      <div className="relative grid h-full gap-6 xl:grid-cols-[1.14fr_0.86fr]">
-        <div className="grid grid-rows-[auto_1fr_auto] gap-5">
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-[10px] uppercase tracking-[0.32em] text-[var(--accent)]">
-              {project.status}
-            </span>
-            <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-              Project dossier
-            </span>
-          </div>
+      <div className="relative">
+        <ProjectPreview project={project} />
 
-          <div className="grid gap-5 xl:grid-cols-[0.92fr_1.08fr]">
-            <div className="overflow-hidden rounded-[1.7rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] p-4">
-              <ProjectThumbnail index={index} active={active} />
-            </div>
-
-            <div className="flex flex-col rounded-[1.7rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] p-5">
-              <h3 className="text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-[#f7f3ea]">
+        <div className="mt-6 rounded-[1.5rem] border border-[rgba(160,210,230,0.16)] bg-[rgba(10,14,22,0.62)] p-5 xl:p-6">
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+            <div className="max-w-2xl">
+              <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Scene 01</div>
+              <h3 className="mt-3 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-[#f7f3ea]">
                 {project.title}
               </h3>
-              <p className="mt-4 text-base leading-7 text-[var(--muted)]">{project.role}</p>
-              <p className="mt-5 text-sm leading-7 text-[var(--muted)]">{project.description}</p>
-              <div className="mt-auto pt-6">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
-                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Genre</div>
-                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.genre}</div>
-                  </div>
-                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
-                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Platform</div>
-                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.platform}</div>
-                  </div>
-                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
-                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Category</div>
-                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.category}</div>
-                  </div>
-                  <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
-                    <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Studio role</div>
-                    <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.role}</div>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <Link
-                    href="#contact"
-                    className="inline-flex items-center rounded-full border border-[rgba(206,224,244,0.22)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)] transition-transform duration-500 hover:-translate-y-0.5"
-                  >
-                    View Project
-                  </Link>
-                </div>
-              </div>
+              <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                Roblox roleplay experience framed as a live project dossier with real game art, community presence, and direct project support context.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 xl:justify-end">
+              {project.gameUrl ? <PortfolioCta href={project.gameUrl} label="Visit Game" variant="primary" /> : null}
+              {project.groupUrl ? <PortfolioCta href={project.groupUrl} label="Visit Group" variant="secondary" /> : null}
             </div>
           </div>
 
-          <div className="grid gap-3 xl:grid-cols-[1.2fr_0.8fr]">
-            <div className="flex flex-wrap gap-3">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.04)] px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]"
-                >
-                  {tag}
-                </span>
-              ))}
+          <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Role</div>
+              <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.role}</div>
             </div>
-            <div className="rounded-[1.2rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3 text-right">
-              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-                {project.platform}
-              </div>
-              <div className="mt-2 text-sm font-semibold tracking-[-0.03em] text-[#f7f3ea]">
-                {project.status}
-              </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Platform</div>
+              <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.platform}</div>
+            </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Status</div>
+              <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.status}</div>
+            </div>
+            <div className="rounded-[1rem] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-4">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Studio role</div>
+              <div className="mt-3 text-sm font-medium text-[#f7f3ea]">{project.role}</div>
             </div>
           </div>
         </div>
@@ -256,87 +265,11 @@ function FeaturedProjectCard({
   );
 }
 
-function ProjectArchiveSpine({
-  project,
-  index,
-  active,
-}: {
-  project: (typeof portfolioProjects)[number];
-  index: number;
-  active: boolean;
-}) {
-  return (
-    <motion.div
-      animate={{
-        opacity: active ? 1 : 0.42,
-        scale: active ? 1 : 0.96,
-        borderColor: active ? "rgba(169,210,255,0.24)" : "rgba(255,255,255,0.08)",
-        backgroundColor: active ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.03)",
-      }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="rounded-[1.2rem] border px-4 py-4"
-    >
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Scene 0{index + 1}</div>
-          <div className="mt-2 text-sm font-semibold tracking-[-0.03em] text-[#f7f3ea]">{project.title}</div>
-        </div>
-        <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">{project.status}</div>
-      </div>
-    </motion.div>
-  );
-}
-
 export function PortfolioSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const sceneRef = useRef<HTMLDivElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [enhanced, setEnhanced] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress: sectionProgress } = useScroll({
-    target: sceneRef,
-    offset: ["start start", "end end"],
-  });
-  const stagedProgress = useTransform(sectionProgress, [0.08, 0.92], [0, 1]);
-  const smoothedProgress = useSpring(stagedProgress, {
-    stiffness: 46,
-    damping: 26,
-    mass: 0.92,
-  });
-  const stageGlowX = useTransform(smoothedProgress, [0, 1], ["16%", "72%"]);
-  const stageGlowY = useTransform(smoothedProgress, [0, 1], ["18%", "62%"]);
-  const stageLineScale = useTransform(smoothedProgress, [0, 1], [0.82, 1.06]);
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    const updateMode = () => setEnhanced(mediaQuery.matches);
-    updateMode();
-
-    mediaQuery.addEventListener("change", updateMode);
-    return () => mediaQuery.removeEventListener("change", updateMode);
-  }, [prefersReducedMotion]);
-
-  useEffect(() => {
-    const unsubscribe = smoothedProgress.on("change", (latest) => {
-      const next = Math.max(
-        0,
-        Math.min(portfolioProjects.length - 1, Math.round(latest * (portfolioProjects.length - 1))),
-      );
-      setActiveIndex(next);
-    });
-
-    return unsubscribe;
-  }, [smoothedProgress]);
+  const activeProject = portfolioProjects[0];
 
   return (
-    <section
-      id="portfolio"
-      ref={sectionRef}
-      className="section-shell relative py-28 md:py-36"
-    >
+    <section id="portfolio" className="section-shell relative py-28 md:py-36">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_24%_16%,rgba(169,210,255,0.08),transparent_18%),radial-gradient(circle_at_76%_68%,rgba(255,209,220,0.08),transparent_18%)]" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading
@@ -345,95 +278,46 @@ export function PortfolioSection() {
           description="A curated look at the games, systems, and support frameworks connected to the studio, presented with the same level of care as the rest of the brand experience."
         />
 
-        <div ref={sceneRef} className={`relative mt-16 ${enhanced ? "h-[620vh]" : ""}`}>
-        {enhanced ? (
-            <div className="sticky top-0 flex min-h-screen items-center">
-              <div className="grid w-full gap-10 lg:grid-cols-[0.76fr_1.24fr]">
-                <motion.div
-                  className="relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(8,10,16,0.88))] p-8"
-                >
-                  <div className="section-frame" />
-                  <div className="line-sweep top-[5.75rem]" />
-                  <div className="ambient-node left-8 top-24 h-2 w-2" />
-                  <div className="text-xs uppercase tracking-[0.34em] text-[var(--accent)]">Showcase stage</div>
-                  <MotionDivider className="mt-6 h-px w-28 origin-left bg-[linear-gradient(90deg,var(--accent-blue),var(--accent),transparent)]" />
-                  <div className="mt-6 text-[clamp(3rem,7vw,5.5rem)] font-semibold uppercase leading-[0.9] tracking-[-0.08em] text-[#f7f3ea]">
-                    Our
-                    <br />
-                    portfolio.
-                  </div>
-                  <p className="mt-8 max-w-sm text-base leading-7 text-[var(--muted)]">
-                    Each project is framed like a live studio dossier, with the concept, delivery role, genre, and platform gathered into one controlled presentation.
-                  </p>
-                  <div className="mt-10 grid gap-3">
-                    {portfolioProjects.map((project, index) => (
-                      <div
-                        key={project.title}
-                        className={`rounded-[1.25rem] border px-4 py-4 transition-all duration-300 ${
-                          activeIndex === index
-                            ? "border-[rgba(169,210,255,0.24)] bg-[rgba(255,255,255,0.06)] shadow-[0_14px_34px_rgba(0,0,0,0.2)]"
-                            : "border-[var(--line)] bg-[rgba(255,255,255,0.02)]"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="text-sm font-semibold tracking-[-0.03em] text-[#f7f3ea]">
-                            {project.title}
-                          </span>
-                          <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
-                            {project.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                <motion.div className="relative h-[44rem]">
-                  <motion.div
-                    className="pointer-events-none absolute left-[6%] top-[11%] h-px w-[74%] bg-[linear-gradient(90deg,rgba(169,210,255,0.26),rgba(255,255,255,0.04),transparent)]"
-                    style={{ scaleX: stageLineScale, transformOrigin: "left center" }}
-                  />
-                  <motion.div
-                    className="pointer-events-none absolute h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(174,239,234,0.16),transparent_72%)] blur-xl"
-                    style={{ left: stageGlowX, top: stageGlowY }}
-                  />
-                  <motion.div
-                    className="pointer-events-none absolute left-[18%] bottom-[12%] h-px w-[38%] bg-[linear-gradient(90deg,rgba(255,209,220,0.28),transparent)]"
-                    style={{ scaleX: stageLineScale, transformOrigin: "left center" }}
-                  />
-                  <div className="absolute inset-0 grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-                    <div className="relative">
-                      <AnimatePresence mode="wait">
-                        <FeaturedProjectCard
-                          key={portfolioProjects[activeIndex].title}
-                          project={portfolioProjects[activeIndex]}
-                          index={activeIndex}
-                          active
-                        />
-                      </AnimatePresence>
-                    </div>
-
-                    <div className="flex flex-col justify-center gap-4 pl-2">
-                      {portfolioProjects.map((project, index) => (
-                        <ProjectArchiveSpine
-                          key={project.title}
-                          project={project}
-                          index={index}
-                          active={activeIndex === index}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
+        <div className="mt-16 grid gap-8 xl:grid-cols-[0.72fr_1.28fr] xl:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(8,10,16,0.88))] p-8"
+          >
+            <div className="section-frame" />
+            <div className="line-sweep top-[5.75rem]" />
+            <div className="ambient-node left-8 top-24 h-2 w-2" />
+            <div className="text-xs uppercase tracking-[0.34em] text-[var(--accent)]">Showcase stage</div>
+            <MotionDivider className="mt-6 h-px w-28 origin-left bg-[linear-gradient(90deg,var(--accent-blue),var(--accent),transparent)]" />
+            <div className="mt-6 text-[clamp(3rem,7vw,5.5rem)] font-semibold uppercase leading-[0.9] tracking-[-0.08em] text-[#f7f3ea]">
+              Our
+              <br />
+              portfolio.
             </div>
-        ) : (
-          <div className="mt-16 grid gap-6">
-            {portfolioProjects.map((project, index) => (
-              <ProjectStackCard key={project.title} project={project} index={index} />
-            ))}
+            <p className="mt-8 max-w-sm text-base leading-7 text-[var(--muted)]">
+              Each project is framed like a live studio dossier, with the concept, delivery role, genre, and platform gathered into one controlled presentation.
+            </p>
+
+            <div className="mt-10 grid gap-3">
+              {portfolioProjects.map((project) => (
+                <ProjectSelectorItem key={project.title} project={project} active={project.title === activeProject.title} />
+              ))}
+            </div>
+          </motion.div>
+
+          <div className="grid gap-6">
+            <div className="hidden lg:block">
+              <FeaturedProjectCard project={activeProject} />
+            </div>
+
+            <div className="grid gap-6 lg:hidden">
+              {portfolioProjects.map((project, index) => (
+                <ProjectStackCard key={`${project.title}-${index}`} project={project} index={index} />
+              ))}
+            </div>
           </div>
-        )}
         </div>
       </div>
     </section>

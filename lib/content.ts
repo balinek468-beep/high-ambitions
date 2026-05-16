@@ -87,15 +87,22 @@ export const processSteps = [
 
 export const portfolioProjects = [
   {
-    title: "N/A",
-    role: "No public projects listed yet",
-    genre: "N/A",
-    platform: "N/A",
-    category: "Portfolio Pending",
-    tags: ["Portfolio Pending"],
-    status: "No games yet",
+    title: "Forsaken RP",
+    role: "Project Management / Game Design / QA",
+    genre: "Roleplay",
+    platform: "Roblox",
+    category: "Community Game",
+    tags: ["Roblox", "Roleplay", "Community"],
+    status: "Live",
     description:
-      "There are no public games or featured projects listed yet. This section will be updated as High Ambitions Studios publishes work.",
+      "A Roblox roleplay experience connected to the Forsaken RP community, built around character-driven sessions, social interaction, and an active player-facing space.",
+    gameUrl: "https://www.roblox.com/games/76231371152392/Forsaken-RP",
+    groupUrl: "https://www.roblox.com/communities/35538904/Forsaken-RP#!/about",
+    images: [
+      "/portfolio/forsaken-1.webp",
+      "/portfolio/forsaken-2.webp",
+      "/portfolio/forsaken-3.webp",
+    ],
   },
 ];
 
